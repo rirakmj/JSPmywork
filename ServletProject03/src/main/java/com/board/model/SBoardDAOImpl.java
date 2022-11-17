@@ -22,7 +22,10 @@ public class SBoardDAOImpl implements SBoardDAO {
 				
 		try {
 			con = DBConnection.getConnection();
-			String sql = "insert into simpleboard(num, userid, subject, email, content) values(simpleboard_seq.nextval,?,?,?,?)";
+			String sql = String sql = "insert into simpleboard "
++ " values(simpleboard_seq.nextval,?,?,?,0,?, sysdate)";
+				
+				"insert into simpleboard(num, userid, subject, email, content) values(simpleboard_seq.nextval,?,?,?,?)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1,  board.getUserid());
 			ps.setString(2, board.getSubject());
@@ -48,6 +51,17 @@ public class SBoardDAOImpl implements SBoardDAO {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from simpleboard");
 			while(rs.next()) {
+				BoardDTO board= new BoardDTO();
+board.setContent(rs.getString("content"));
+board.setEmail(rs.getString("email"));
+board.setNum(rs.getInt("num"));
+board.setReadcount(rs.getInt("readcount"));
+board.setRegdate(rs.getString("regdate"));
+board.setSubject(rs.getString("subject"));
+board.setUserid(rs.getString("userid"));
+arr.add(board);
+				
+				
 				BoardDTO barr = new BoardDTO();
 				barr.setUserid(rs.getString("userid"));
 				barr.setSubject(rs.getString("subject"));
