@@ -3,30 +3,30 @@ package com.board.model;
 import java.util.ArrayList;
 
 public interface SBoardDAO {
-	// Ãß°¡ 
+	// ì¶”ê°€ 
 	public void boardInsert(BoardDTO board);
 		
-	// ¼öÁ¤ 
+	// ìˆ˜ì • 
 	public void boardUpdate(BoardDTO board);
 	
-	// ÀüÃ¼º¸±â
+	// ì „ì²´ë³´ê¸°
 	public ArrayList<BoardDTO> boardList();
 	public ArrayList<BoardDTO> boardList(int startRow, int endRow, String field, String word);
 	
-	// »ó¼¼º¸±â 
+	// ìƒì„¸ë³´ê¸° 
 	public BoardDTO findByNum(int num);
 	
-	// »èÁ¦
+	// ì‚­ì œ
 	public void boardDelete(int num);
 		
-	//°Ô½Ã±Û ¼ö 
+	//ê²Œì‹œê¸€ ìˆ˜ 
 	public int boardCount(String field, String word);
 	
-	// ÄÚ¸àÆ®
-	// Ãß°¡
+	// ì½”ë©˜íŠ¸
+	// ì¶”ê°€
 	public void commentInsert(CommentDTO comment);
-	// ÀüÃ¼º¸±â
+	// ì „ì²´ë³´ê¸°
 	public ArrayList<CommentDTO> findAllComment(int bnum);
-	// ´ñ±Û°¹¼ö
-	public int commnetCount(int bnum);
+	// ëŒ“ê¸€ê°¯ìˆ˜
+	public int commentCount(int bnum);
 }
