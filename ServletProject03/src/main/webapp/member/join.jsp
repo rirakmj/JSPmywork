@@ -1,13 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp" %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="UTF-8">
-<title>Insert title here</title>
-</head>
-<body>
+<script src ="../js/member.js"></script>
+
 <div class="container mt-3">
 	<h1>JOIN</h1>
   <form action="join" method="post" id="frm">
@@ -55,5 +50,4 @@
     
 	</form>
   </div>
-</body>
-</html>
+<%@ include file="../include/footer.jsp"%>
