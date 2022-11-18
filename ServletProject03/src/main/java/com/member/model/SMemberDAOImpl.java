@@ -16,62 +16,63 @@ public class SMemberDAOImpl implements SMemberDAO {
 		return instance;
 	}
 
-@Override
-public SMemberDTO memberLoginCheck(String userid, String pwd) {
-	Connection con = null;
-	Statement st = null;
-	ResultSet rs = null;
-	SMemberDTO member = new SMemberDTO();
-	// ë¹„íšŒì› (-1)
-	member.setAdmin(-1);
-	// ì¼ë°˜íšŒì›, ê´€ë¦¬ì(1)
-	// íšŒì›ì´ì§€ë§Œ ë¹„ë²ˆ ì˜¤ë¥˜(2)
+	@Override
+	public SMemberDTO memberLoginCheck(String userid, String pwd) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		SMemberDTO member = new SMemberDTO();
+		// ºñÈ¸¿ø (-1)
+		member.setAdmin(-1);
+		// ÀÏ¹İÈ¸¿ø, °ü¸®ÀÚ(1)
+		// È¸¿øÀÌÁö¸¸ ºñ¹ø ¿À·ù(2)
+		
+		try {
+			con = DBConnection.getConnection();
+			String sql = "select * from memberdb where userid = '"+userid+"'";
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			if(rs.next()) { // id¸ÂÀ½ (È¸¿øÀº ¸ÂÀ½)
+				if(rs.getString("pwd").equals(pwd)) { // ºñ¹ø ¸ÂÀ½
+					member.setAdmin(rs.getInt("admin"));
+					member.setEmail(rs.getString("email"));
+					member.setName(rs.getString("name"));
+					member.setPhone(rs.getString("phone"));
+					member.setPwd(rs.getString("pwd"));
+					member.setUserid(rs.getString("userid"));
+				} else { // ºñ¹ø Æ²¸²
+					member.setAdmin(2); } 
+			}} catch (Exception e) {
+				e.printStackTrace();
+			} finally {
+				closeConnection(con, null, st, rs);
+			}
+		return member;
+	}
 	
-	try {
-		con = DBConnection.getConnection();
-		String sql = "select * from memberdb where userid = '"+userid+"'";
-		st = con.createStatement();
-		rs = st.executeQuery(sql);
-		if(rs.next()) { // idë§ìŒ (íšŒì›ì€ ë§ìŒ)
-			if(rs.getString("pwd").equals(pwd)) { // ë¹„ë²ˆ ë§ìŒ
-				member.setAdmin(rs.getInt("admin"));
-				member.setEmail(rs.getString("email"));
-				member.setName(rs.getString("name"));
-				member.setPhone(rs.getString("phone"));
-				member.setPwd(rs.getString("pwd"));
-				member.setUserid(rs.getString("userid"));
-			} else { // ë¹„ë²ˆ í‹€ë¦¼
-				member.setAdmin(2); } 
-		}} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			closeConnection(con, null, st, rs);
-		}
-	return member;
-}
 	@Override
 	public void memberJoin(SMemberDTO member) {
 		Connection con = null;
 		PreparedStatement ps = null;
 		
 		try {
-			con =DBConnection.getConnection();
-			String sql="insert into memberdb values(?,?,?,?,?,?)";
+			con = DBConnection.getConnection();
+			String sql = "insert into memberdb values(?,?,?,?,?,?)";
 			ps = con.prepareStatement(sql);
-			ps.setString(1, member.getName());
-			ps.setString(2, member.getUserid());
-			ps.setString(3, member.getPwd());
-			ps.setString(4, member.getEmail());
-			ps.setString(5, member.getPhone());
-			ps.setInt(6, member.getAdmin());
+			ps.setString(1,  member.getName());
+			ps.setString(2,  member.getUserid());
+			ps.setString(3,  member.getPwd());
+			ps.setString(4,  member.getEmail());
+			ps.setString(5,  member.getPhone());
+			ps.setInt(6,  member.getAdmin());
 			ps.executeUpdate();
 		} catch (Exception e) {
-			e.printStackTrace();
-			}finally {
-			closeConnection(con, ps, null, null);
-		}
-		
-	}
+		e.printStackTrace();
+	}finally {
+	closeConnection(con, ps, null, null);
+}
+
+}
 
 	@Override
 	public ArrayList<SMemberDTO> getMember() {
@@ -134,10 +135,10 @@ public SMemberDTO memberLoginCheck(String userid, String pwd) {
 	}
 	private void closeConnection(Connection con, PreparedStatement ps, Statement st, ResultSet rs) {
 		try {
-			if(con !=null) 			con.close();
-			if(ps !=null) 				ps.close();
-			if(st !=null) 				st.close();
-			if(rs !=null) 				rs.close();
+			if(con !=null) con.close();
+			if(ps !=null) ps.close();
+			if(st !=null) st.close();
+			if(rs !=null) rs.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

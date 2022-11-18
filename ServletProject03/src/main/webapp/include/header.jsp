@@ -13,6 +13,7 @@
   <script src="https://code.jquery.com/jquery-3.6.1.min.js" ></script>
 <title>Insert title here</title>
 </head>
+<body>
 <nav class="navbar navbar-expand-sm bg-dark navbar-dark">
 <!-- Brand/logo -->
   <a class="navbar-brand" href="/board/list">HOME</a>
@@ -36,19 +37,21 @@
       <a class="nav-link" href="/member/join">회원가입</a> <!-- 세션이 없을 때 나옴 -->
     </li>
     </c:if>
-  <c:if test="${sessonScope.suser.admin == 1 }"> <!-- .getAdmin과 같은 것 -->
+    
+ <c:if test="${sessionScope.suser.admin == 1 }"> <!-- .getAdmin과 같은 것 -->
   <!-- 관리자 모드 -->
     <li class="nav-item">
       <a class="nav-link" href="">회원목록</a>
     </li>
      <li class="nav-item">
-      <a class="nav-link" href="">상품등록</a>
+      <a class="nav-link" href="/product/pInsert">상품등록</a>
     </li>
     <span class="navbar-test">(${sessionScope.suser.name})(관리자)님 반갑습니다.</span>
     </c:if>
-    <c:if test="${sessonScope.suser.admin == 0 }">
+    
+    <c:if test="${sessionScope.suser.admin == 0 }">
     <!-- 일반회원모드 -->
-    <span class="navbar-text">(${sessonScope.suser.name}) 반갑습니다</span>
+    <span class="navbar-text">(${sessionScope.suser.name}) 반갑습니다.</span>
     </c:if>
   
   <c:if test="${not empty sessionScope.suser }">

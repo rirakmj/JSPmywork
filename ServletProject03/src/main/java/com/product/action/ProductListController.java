@@ -1,27 +1,29 @@
-package com.board.action;
+package com.product.action;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import com.board.model.BoardDTO;
-import com.board.model.SBoardDAO;
-import com.board.model.SBoardDAOImpl;
+import com.product.model.Product;
+import com.product.model.ProductDAO;
+import com.product.model.ProductDAOImpl;
 
 /**
- * Servlet implementation class WriteController
+ * Servlet implementation class ProductListController
  */
-@WebServlet("/board/write")
-public class WriteController extends HttpServlet {
+@WebServlet("/product/plist")
+public class ProductListController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public WriteController() {
+    public ProductListController() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -30,25 +32,19 @@ public class WriteController extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.getRequestDispatcher("boardWrite.jsp").forward(request, response);	
+		ProductDAO dao = ProductDAOImpl.getInstance();
+		ArrayList<Product> products = dao.productAllfind();
+		
+		request.setAttribute("products", products);
+		request.getRequestDispatcher("productList.jsp").forward(request, response);
 	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
-		BoardDTO board = new BoardDTO();
-		board.setUserid(request.getParameter("userid"));
-		board.setSubject(request.getParameter("subject"));
-		board.setEmail(request.getParameter("email"));
-		board.setContent(request.getParameter("content"));
-		
-		SBoardDAO dao = SBoardDAOImpl.getInstance();
-		dao.boardInsert(board);
-		
-		response.sendRedirect("list");		
-		
+		// TODO Auto-generated method stub
+		doGet(request, response);
 	}
 
 }

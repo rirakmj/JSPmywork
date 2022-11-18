@@ -22,10 +22,8 @@ public class SBoardDAOImpl implements SBoardDAO {
 				
 		try {
 			con = DBConnection.getConnection();
-			String sql = String sql = "insert into simpleboard "
-+ " values(simpleboard_seq.nextval,?,?,?,0,?, sysdate)";
-				
-				"insert into simpleboard(num, userid, subject, email, content) values(simpleboard_seq.nextval,?,?,?,?)";
+			String sql = "insert into simpleboard "
+					+ " values(simpleboard_seq.nextval,?,?,?,0,?, sysdate)";
 			ps = con.prepareStatement(sql);
 			ps.setString(1,  board.getUserid());
 			ps.setString(2, board.getSubject());
@@ -51,23 +49,15 @@ public class SBoardDAOImpl implements SBoardDAO {
 			st = con.createStatement();
 			rs = st.executeQuery("select * from simpleboard");
 			while(rs.next()) {
-				BoardDTO board= new BoardDTO();
-board.setContent(rs.getString("content"));
-board.setEmail(rs.getString("email"));
-board.setNum(rs.getInt("num"));
-board.setReadcount(rs.getInt("readcount"));
-board.setRegdate(rs.getString("regdate"));
-board.setSubject(rs.getString("subject"));
-board.setUserid(rs.getString("userid"));
-arr.add(board);
-				
-				
-				BoardDTO barr = new BoardDTO();
-				barr.setUserid(rs.getString("userid"));
-				barr.setSubject(rs.getString("subject"));
-				barr.setEmail(rs.getString("email"));
-				barr.setContent(rs.getString("content"));
-				arr.add(barr);
+				BoardDTO board = new BoardDTO();
+				board.setContent(rs.getString("content"));
+				board.setEmail(rs.getString("email"));
+				board.setNum(rs.getInt("num"));
+				board.setReadcount(rs.getInt("readcount"));
+				board.setRegdate(rs.getString("regdate"));
+				board.setSubject(rs.getString("subject"));
+				board.setUserid(rs.getString("userid"));
+				arr.add(board);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -140,20 +130,75 @@ arr.add(board);
 
 	@Override
 	public void commentInsert(CommentDTO comment) {
-		// TODO Auto-generated method stub
-		
+		Connection con = null;
+		PreparedStatement ps = null;
+				
+		try {
+			con = DBConnection.getConnection();
+			String sql = "insert into comboard "
+					+ " values(comboard_seq.nextval,?,?,sysdate,?)";
+			ps = con.prepareStatement(sql);
+			ps.setString(1, comment.getUserid());
+			ps.setString(2, comment.getMsg());
+			ps.setInt(3, comment.getBnum());
+			ps.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		} finally {
+			closeConnection(con, ps, null, null);
+		}			
 	}
 
 	@Override
 	public ArrayList<CommentDTO> findAllComment(int bnum) {
-		// TODO Auto-generated method stub
-		return null;
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		ArrayList<CommentDTO> carr = new ArrayList<CommentDTO>();
+		
+		try {
+			con = DBConnection.getConnection();
+			st = con.createStatement();
+			String sql = "select * from comboard where bnum="+bnum+" order by cnum desc";
+		    rs = st.executeQuery(sql);
+		    while(rs.next()) {
+		    	CommentDTO comment = new CommentDTO();
+		    	comment.setBnum(rs.getInt("bnum"));
+		    	comment.setCnum(rs.getInt("cnum"));
+		    	comment.setMsg(rs.getString("msg"));
+		    	comment.setRegdate(rs.getString("regdate"));
+		    	comment.setUserid(rs.getString("userid"));
+		    	carr.add(comment);
+		    }
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return carr;
 	}
 
 	@Override
-	public int commnetCount(int bnum) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int commentCount(int bnum) {
+		Connection con = null;
+		Statement st = null;
+		ResultSet rs = null;
+		int count = 0;
+		
+		try {
+			con = DBConnection.getConnection();
+			String sql = "select count(*) from comboard where bnum="+bnum;
+			st = con.createStatement();
+			rs = st.executeQuery(sql);
+			if(rs.next()) {
+				count=rs.getInt(1);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			// TODO: handle exception
+		} finally {
+	closeConnection(con, null, st, rs);
+		}
+		return count;
 	}
 
 private void closeConnection(Connection con, PreparedStatement ps, Statement st, ResultSet rs) {

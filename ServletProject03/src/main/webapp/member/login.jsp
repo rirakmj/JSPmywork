@@ -3,7 +3,7 @@
 <%@ include file="../include/header.jsp" %>
 
 <div class="container mt-3">
-  <form action="" method="post" id="frm">
+  <form action="login" method="post" id="frm">
     <div class="form-group">
       <label for="userid">UserID:</label>
       <input type="text" class="form-control" id="userid" placeholder="Enter Userid" name="userid">
@@ -14,12 +14,11 @@
       <input type="password" class="form-control" id="pwd" placeholder="Enter Password" name="pwd">
     </div>
     
-    <button type="button" class="btn btn-primary" id="loginBtn">Submit</button>
+    <button type="button" class="btn btn-primary" id="loginBtn">로그인</button>
     
 </form>
 </div>
 <script> // 밑에 넣어야 함
-$(function(){
 	$("#loginBtn").click(function(){
 		if($("#userid").val()==""){
 		alert("아이디를 입력하세요");

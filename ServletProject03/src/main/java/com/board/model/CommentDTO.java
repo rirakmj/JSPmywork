@@ -6,6 +6,7 @@ public class CommentDTO {
 	private String msg;
 	private String regdate;
 	private int bnum;
+	
 	public int getCnum() {
 		return cnum;
 	}

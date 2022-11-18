@@ -44,9 +44,11 @@ public class LoginController extends HttpServlet {
 		request.setCharacterEncoding("utf-8");
 		String userid = request.getParameter("userid");
 		String pwd = request.getParameter("pwd"); // pwd를 암호화해줘야함
+		
 		SMemberDAO dao = SMemberDAOImpl.getInstance();
 		String encPwd = SHA256.getEncrypt(pwd, userid);
 		System.out.println(encPwd);
+		
 		SMemberDTO member = dao.memberLoginCheck(userid,  encPwd);
 		int flag = member.getAdmin();
 		if(flag==0 || flag==1) { // 회원이면 session에 넣기
