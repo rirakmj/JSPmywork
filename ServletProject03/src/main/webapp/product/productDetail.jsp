@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
 <%@ include file="../include/header.jsp"%>
 
-<div class="jumbotron jumbotron-fluid">
+<div class="jumbotron jumbotron-fluid mb-5">
 	<div class="container">
 		<h1>상품 상세보기</h1>
 	</div>
@@ -15,7 +15,7 @@
   <div class="container">
   	<table class="table table-borderless">
   	<tr>
-  	 <td width="200px">제품 번호</td>
+  	 <td>제품 번호</td>
   	 <td>${product.productId }</td>
   	 </tr>
   	<tr>
@@ -23,25 +23,31 @@
   	 <td>${product.pname }(${product.category })</td>
   	 </tr>
   	 <tr>
-  	 <td width="200px">가격</td>
+  	 <td>가격</td>
   	 <td>${product.unitPrice }</td>
   	 </tr>
   	 <tr>
-  	 <td width="200px">설명</td>
+  	 <td>상품 설명</td>
   	 <td>${product.description }</td>
   	 </tr>
   	 <tr>
-  	 <td width="200px">제조사</td>
+  	 <td>제조사</td>
   	 <td>${product.manufacturer }</td>
   	 </tr>
   	 <tr>
-  	 <td width="200px">재고수</td>
+  	 <td>재고수</td>
   	 <td>${product.unitsInStock }</td>
   	 </tr>
   	 <tr>
-  	 <td width="200px">상태</td>
+  	 <td>구분</td>
   	 <td>${product.condition }</td>
   	 </tr>
+		<tr>
+		<td colspan="2">
+		   			<button class="btn btn-primary">장바구니</button>
+		   			<button class="btn btn-info">구매하기</button>
+		   		</td>
+		</tr>
   	  	 </table>
   </div>
   </div>
