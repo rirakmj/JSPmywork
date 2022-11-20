@@ -10,7 +10,7 @@
    
  <div class='d-flex container'>
  	<div class="card" style="width:300px">
-    	<img class="card-img-top" src="../upload/${product.filename }" alt="Card image" style="width:100%; height:100%">
+    	<img class="card-img-top" src="/upload/${product.filename }" alt="Card image" style="width:100%; height:100%">
     </div>
   <div class="container">
   	<table class="table table-borderless">
