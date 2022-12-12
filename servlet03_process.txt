@@ -1,0 +1,18 @@
+SimpleBoard
+게시판 글쓰기
+write ==> BoardWriteController ==> DAO ==> DB
+								boardinsert()
+
+
+
+
+
+게시판 리스트
+		board.action
+		==> BoardListController ==> DAO ==> DB
+								boardlist()
+boardlist
+	boardlist.jsp  <====
+	
+
+						
